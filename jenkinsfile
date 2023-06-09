@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment {
-        Image_Name = "fadysg/GO_GO"
+        Image_Name = "fadysg/go_go"
     }
     stages {
         stage('Build') {
