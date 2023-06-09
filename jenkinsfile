@@ -1,0 +1,23 @@
+pipeline{
+    agent any
+    environment {
+        Image_Name = "fadysg/GO_GO"
+    }
+    stages {
+        stage('Build') {
+            steps{
+                script {
+                    dockerImage = docker.build(Image_Name + ":$BUILD_NUMBER")
+                }
+            }
+            post{
+                success {
+                    echo 'Docker image built successfully.'
+                }
+                failure {
+                    echo 'Docker image build failed.'
+                }
+            }
+        }
+    }
+}
