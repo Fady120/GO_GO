@@ -2,6 +2,8 @@ pipeline{
     agent any
     environment {
         Image_Name = "fadysg/go_go"
+        repo = "https://registry.hub.docker.com/v2/"
+        credentials = "Spider1"
     }
     stages {
         stage('Build') {
@@ -12,10 +14,27 @@ pipeline{
             }
             post{
                 success {
-                    echo 'Docker image built successfully.'
+                    echo "Docker Image was Built Successfully."
                 }
                 failure {
-                    echo 'Docker image build failed.'
+                    echo "Docker Image Build Failed."
+                }
+            }
+        }
+         stage('Push') {
+            steps{
+                script {
+                    docker.withRegistry(repo, credentials) {
+                        dockerImage.push()
+                    }
+                }
+            }
+            post {
+                success {
+                    echo "Docker Image was Pushed Successfully."
+                }
+                failure {
+                    echo "Docker Image wasn't Pushed Successfully."
                 }
             }
         }
