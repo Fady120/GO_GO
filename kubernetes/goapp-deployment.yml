@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goapp-pod
+  labels:
+    app: goapp-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goapp-pod
+  template:
+    metadata:
+      labels:
+        app: goapp-pod
+    spec:
+      containers:
+      - image: fadysg/go_go:6
+        name: goapp-pod
+        ports:
+          - containerPort: 9090
+            name: http
+        command: ["/app/app"]
+        env:
+          - name: MYSQL_HOST
+            value: "mysql-service"
+        envFrom:
+          - secretRef:
+              name: goapp-secret

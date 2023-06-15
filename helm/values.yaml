@@ -1,0 +1,24 @@
+Secret:
+  mysqlHost: "mysql-service"
+  mysqlPass: "3737"
+  mysqlPort: "3306"
+  mysqlUser: "Fady"
+  mysqlRootPassword: "2828"
+  mysqlDATABASE: "internship"
+goapp:
+  image: fadysg/go_go:6
+  port: 9090
+  targetPort: 9090
+  replicas: 1
+  type: NodePort
+  name: api
+Mysql:
+  image: mysql
+  port: 3306
+  targetPort: 3306
+  replicas: 1
+  type: ClusterIP
+pvc:
+  mysqlPvClaim:
+    storageClass: manual
+    storageRequest: 10Gi

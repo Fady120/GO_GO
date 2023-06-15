@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goapp-pod
+  labels:
+    app: goapp-pod
+spec:
+  replicas: {{ .Values.goapp.replicas }}
+  selector:
+    matchLabels:
+      app: goapp-pod
+  template:
+    metadata:
+      labels:
+        app: goapp-pod
+    spec:
+      containers:
+      - image: {{ .Values.goapp.image }}
+        name: goapp-pod
+        port: 
+          - containerPort:  {{ .Values.goapp.port }}
+        env:
+          - name: MYSQL_HOST
+            value: {{ .Values.Secret.mysqlHost | quote }}
+          - name: MYSQL_PASS
+            value: {{ .Values.Secret.mysqlPass | quote }}
+          - name: MYSQL_PORT
+            value: {{ .Values.Secret.mysqlPort | quote }}
+          - name: MYSQL_USER
+            value: {{ .Values.Secret.mysqlUser | quote }}

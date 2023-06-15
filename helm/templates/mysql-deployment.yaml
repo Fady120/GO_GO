@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment                            
+metadata:
+  name: mysql-pod                     
+  labels:                        
+    app: mysql-pod
+spec:
+  replicas: {{ .Values.Mysql.replicas }}
+  selector:
+    matchLabels:                            
+      app: mysql-pod
+      tier: mysql-pod
+  template:                                 
+    metadata: 
+      labels:                               
+        app: mysql-pod
+        tier: mysql-pod
+    spec:                                   
+      containers:
+        - image: {{ .Values.Mysql.image }}                
+          name: mysql-pod
+          ports:
+            - containerPort: {{ .Values.Secret.mysqlPort }}
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.Secret.mysqlRootPassword | quote }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.Secret.mysqlPass | quote }}
+            - name: MYSQL_PORT
+              value: {{ .Values.Secret.mysqlPort | quote }}
+            - name: MYSQL_USER
+              value: {{ .Values.Secret.mysqlUser | quote }}
+            - name: MYSQL_DATABASE
+              value: {{ .Values.Secret.mysqlDATABASE | quote }}
