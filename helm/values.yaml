@@ -18,7 +18,3 @@ Mysql:
   targetPort: 3306
   replicas: 1
   type: ClusterIP
-pvc:
-  mysqlPvClaim:
-    storageClass: manual
-    storageRequest: 10Gi
